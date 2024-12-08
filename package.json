@@ -1,0 +1,24 @@
+{
+  "name": "track.com",
+  "version": "1.0.0",
+  "description": "a webapp where track money managment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinhaji2000/track.com.git"
+  },
+  "author": "Mukesh sinha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sinhaji2000/track.com/issues"
+  },
+  "homepage": "https://github.com/sinhaji2000/track.com#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.8.4"
+  }
+}

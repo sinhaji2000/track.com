@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Trip</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <div class="container mx-auto mt-10">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+      <h1 class="text-2xl font-bold mb-4 text-gray-800">Create a New Trip</h1>
+      
+      <form action="/trip/createTrip" method="POST" class="space-y-6">
+        <!-- Trip Title -->
+        <div>
+          <label for="tripTitle" class="block text-gray-700 font-medium mb-2">Trip Title:</label>
+          <input type="text" id="tripTitle" name="tripTitle" 
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                 required>
+        </div>
+        
+        <h2 class="text-xl font-semibold text-gray-800">Expenses</h2>
+        <div id="expensesContainer" class="space-y-4">
+          <!-- Expense Input Fields -->
+          <div class="expense bg-gray-50 p-4 rounded-lg shadow-sm">
+            <label for="expenses[0][title]" class="block text-gray-700 mb-2">Expense Title:</label>
+            <input type="text" id="expenses[0][title]" name="expenses[0][title]" 
+                   class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                   placeholder="e.g., Fuel" required>
+
+            <label for="expenses[0][amount]" class="block text-gray-700 mb-2">Amount:</label>
+            <input type="number" id="expenses[0][amount]" name="expenses[0][amount]" 
+                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                   placeholder="e.g., 2000" required>
+          </div>
+        </div>
+        <button type="button" onclick="addExpense()" 
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400">
+          Add More Expense
+        </button>
+
+        <h2 class="text-xl font-semibold text-gray-800">Participants</h2>
+        <div id="participantsContainer" class="space-y-4">
+          <!-- Participant Input Fields -->
+          <div class="participant bg-gray-50 p-4 rounded-lg shadow-sm">
+            <label for="participants[0][email]" class="block text-gray-700 mb-2">Participant Email:</label>
+            <input type="email" id="participants[0][email]" name="participants[0][email]" 
+                   class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                   placeholder="e.g., user@example.com" required>
+
+            <label for="participants[0][amount]" class="block text-gray-700 mb-2">Amount:</label>
+            <input type="number" id="participants[0][amount]" name="participants[0][amount]" 
+                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                   placeholder="e.g., 1000" required>
+          </div>
+        </div>
+        <button type="button" onclick="addParticipant()" 
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400">
+          Add More Participant
+        </button>
+
+        <!-- Submit Button -->
+        <button type="submit" 
+                class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 focus:ring-4 focus:ring-green-400 mt-6">
+          Create Trip
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let expenseCount = 1;
+    let participantCount = 1;
+
+    function addExpense() {
+      const expensesContainer = document.getElementById('expensesContainer');
+      const expenseDiv = document.createElement('div');
+      expenseDiv.classList.add('expense', 'bg-gray-50', 'p-4', 'rounded-lg', 'shadow-sm', 'mt-4');
+
+      expenseDiv.innerHTML = `
+        <label for="expenses[${expenseCount}][title]" class="block text-gray-700 mb-2">Expense Title:</label>
+        <input type="text" id="expenses[${expenseCount}][title]" name="expenses[${expenseCount}][title]" 
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               placeholder="e.g., Food" required>
+
+        <label for="expenses[${expenseCount}][amount]" class="block text-gray-700 mb-2">Amount:</label>
+        <input type="number" id="expenses[${expenseCount}][amount]" name="expenses[${expenseCount}][amount]" 
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               placeholder="e.g., 1500" required>
+      `;
+
+      expensesContainer.appendChild(expenseDiv);
+      expenseCount++;
+    }
+
+    function addParticipant() {
+      const participantsContainer = document.getElementById('participantsContainer');
+      const participantDiv = document.createElement('div');
+      participantDiv.classList.add('participant', 'bg-gray-50', 'p-4', 'rounded-lg', 'shadow-sm', 'mt-4');
+
+      participantDiv.innerHTML = `
+        <label for="participants[${participantCount}][email]" class="block text-gray-700 mb-2">Participant Email:</label>
+        <input type="email" id="participants[${participantCount}][email]" name="participants[${participantCount}][email]" 
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               placeholder="e.g., user@example.com" required>
+
+        <label for="participants[${participantCount}][amount]" class="block text-gray-700 mb-2">Amount:</label>
+        <input type="number" id="participants[${participantCount}][amount]" name="participants[${participantCount}][amount]" 
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               placeholder="e.g., 1000" required>
+      `;
+
+      participantsContainer.appendChild(participantDiv);
+      participantCount++;
+    }
+  </script>
+</body>
+</html>

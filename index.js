@@ -7,6 +7,7 @@ const db = require("./config/mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("./config/passportLocal");
+const User = require("./models/user");
 
 const MongoStore = require("connect-mongo");
 
@@ -22,7 +23,6 @@ app.set("views", path.join(__dirname, "views"));
 
 // importing routes
 const dashboardRoutes = require("./routes/dashboardRoutes");
-const userRoutes = require("./routes/userRoutes");
 
 app.use(
   session({
@@ -48,7 +48,8 @@ app.use(passportLocal.setAuthenticatedUser);
 
 // using routes
 app.use(dashboardRoutes);
-app.use("/user", userRoutes);
+app.use("/user", require("./routes/userRoutes"));
+app.use("/trip", require("./routes/tripRoutes"));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

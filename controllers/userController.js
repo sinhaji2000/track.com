@@ -45,3 +45,16 @@ exports.postSignUp = async (req, res) => {
     return res.status(500).send("Error creating user");
   }
 };
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    return res.render("userProfile", {
+      title: "User Profile",
+      profile: user,
+    });
+  } catch {
+    console.log("error in fetching user profile");
+    return res.redirect("/");
+  }
+};

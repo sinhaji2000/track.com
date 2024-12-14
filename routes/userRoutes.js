@@ -1,7 +1,9 @@
 const express = require("express");
 const Router = express.Router();
-const userController = require("../controllers/userController");
 const passport = require("../config/passportLocal");
+
+const userController = require("../controllers/userController");
+const tripController = require("../controllers/tripController");
 
 Router.get("/signIn", passport.isAuthenticated, userController.getSignIn);
 Router.post(
@@ -12,5 +14,14 @@ Router.post(
 
 Router.get("/signUp", passport.isAuthenticated, userController.getSignUp);
 Router.post("/signup", userController.postSignUp);
+
+Router.get(
+  "/profile/:id",
+  passport.checkAuthentication,
+
+  userController.getUserProfile
+);
+
+
 
 module.exports = Router;

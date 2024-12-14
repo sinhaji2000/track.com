@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  trips: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Trip",
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

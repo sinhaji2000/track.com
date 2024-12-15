@@ -21,7 +21,16 @@ Router.get(
 
   userController.getUserProfile
 );
-
+Router.get(
+  "/updateProfile/:id",
+  passport.checkAuthentication,
+  userController.getUpdateProfile
+);
+Router.post(
+  "/updateProfile/:id",
+  passport.checkAuthentication,
+  userController.updateUserProfile
+);
 
 
 module.exports = Router;

@@ -1,6 +1,8 @@
 const Trip = require("../models/tripModel");
 const User = require("../models/user");
 
+
+
 exports.getcreateTrip = async (req, res) => {
   return res.render("createTrip");
 };

@@ -49,6 +49,7 @@ exports.postSignUp = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    // console.log(req.body);
     return res.render("userProfile", {
       title: "User Profile",
       profile: user,
@@ -56,5 +57,56 @@ exports.getUserProfile = async (req, res) => {
   } catch {
     console.log("error in fetching user profile");
     return res.redirect("/");
+  }
+};
+
+exports.getUpdateProfile = async (req, res) => {
+  try {
+    // return res.redirect("/");
+    const user = await User.findById(req.params.id);
+    // console.log(user.name);
+    return res.render("updateProfile", {
+      title: "Update Profile",
+      profile: user,
+    });
+  } catch (error) {
+    console.log("Error in fetching user profile");
+    return res.redirect("/");
+  }
+};
+
+exports.updateUserProfile = async (req, res) => {
+  try {
+    // Ensure the user is authorized to update the profile
+    if (req.body._id === req.params.id) {
+      const { name, password } = req.body;
+
+      let hashedPassword = undefined;
+      if (password) {
+        const saltRounds = 10;
+        hashedPassword = await bcrypt.hash(password, saltRounds);
+      }
+
+      const updateFields = {
+        name,
+      };
+
+      if (hashedPassword) {
+        updateFields.password = hashedPassword; // Add the hashed password only if it exists
+      }
+
+      await User.findByIdAndUpdate(req.params.id, updateFields);
+
+      // Find the user and update the details
+      // await User.findByIdAndUpdate(req.params.id, { name, password });
+
+      // Redirect to the profile page after a successful update
+      return res.redirect("/user/profile/" + req.params.id);
+    } else {
+      return res.status(403).send("Unauthorized action.");
+    }
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return res.status(500).redirect("/");
   }
 };

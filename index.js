@@ -9,6 +9,12 @@ const passport = require("passport");
 const passportLocal = require("./config/passportLocal");
 const User = require("./models/user");
 
+
+app.use(require("express-ejs-layouts"));
+// Extract styles and scripts from subpages into the layout
+app.set("layout extractStyles", true);
+app.set("layout extractScripts", true);
+
 const MongoStore = require("connect-mongo");
 
 // app.use(expressLayouts);

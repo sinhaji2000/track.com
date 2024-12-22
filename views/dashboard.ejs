@@ -1,45 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center">
 
-    <header class="w-full bg-gray-800 shadow-lg py-4">
-        <h1 class="text-center text-3xl font-bold text-blue-400">Dashboard</h1>
-    </header>
 
-    <main class="w-full max-w-4xl mx-auto mt-8 px-4">
-        <% user.trips.forEach((trip) => { %>
-        <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-            <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
+  <!-- Main Content -->
+  <main class="w-full max-w-4xl mx-auto mt-8 px-4 flex-1">
+    <% user.trips.forEach((trip) => { %>
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
 
-            <% 
-                let totalExpense = 0; 
-                trip.expenses.forEach((expense) => {
-                    totalExpense += expense.amount;
-                });
-            %>
+      <% 
+                  let totalExpense = 0; 
+                  trip.expenses.forEach((expense) => {
+                      totalExpense += expense.amount;
+                  });
+              %>
 
-            <p class="text-lg font-medium text-green-400 mb-4">Total Expenses: ₹<%= totalExpense %></p>
+      <p class="text-lg font-medium text-green-400 mb-4">Total Expenses: ₹<%= totalExpense %></p>
 
-            <ul class="list-disc pl-5">
-                <% trip.expenses.forEach((expense) => { %>
-                <li class="text-gray-300 mb-2">
-                    <span class="font-semibold text-blue-400"><%= expense.title %>:</span> ₹<%= expense.amount %>
-                </li>
-                <% }); %>
-            </ul>
-        </div>
-        <% }) %>
-    </main>
-
-    <footer class="w-full bg-gray-800 py-4 mt-auto">
-        <p class="text-center text-sm text-gray-500">© 2024 Your Trip Management App</p>
-    </footer>
-
-</body>
-</html>
+      <ul class="list-disc pl-5">
+        <% trip.expenses.forEach((expense) => { %>
+        <li class="text-gray-300 mb-2">
+          <span class="font-semibold text-blue-400"><%= expense.title %>:</span> ₹<%= expense.amount %>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+    <% }) %>
+  </main>

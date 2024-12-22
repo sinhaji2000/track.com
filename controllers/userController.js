@@ -2,7 +2,13 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
 exports.getSignIn = (req, res) => {
-  return res.render("signIn");
+
+  if (req.isAuthenticated()) {
+    return res.redirect("/user/userProfile");
+  }
+  return res.render("signIn", {
+    title: "Sign In",
+  });
 };
 
 exports.postSignIn = (req, res) => {
@@ -15,7 +21,9 @@ exports.postSignIn = (req, res) => {
   return res.redirect("/");
 };
 exports.getSignUp = (req, res) => {
-  return res.render("signUp");
+  return res.render("signUp", {
+    title: "Sign Up",
+  });
 };
 exports.postSignUp = async (req, res) => {
   try {

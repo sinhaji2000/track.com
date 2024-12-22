@@ -97,9 +97,6 @@ exports.updateUserProfile = async (req, res) => {
 
       await User.findByIdAndUpdate(req.params.id, updateFields);
 
-      // Find the user and update the details
-      // await User.findByIdAndUpdate(req.params.id, { name, password });
-
       // Redirect to the profile page after a successful update
       return res.redirect("/user/profile/" + req.params.id);
     } else {

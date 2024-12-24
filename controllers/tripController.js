@@ -4,12 +4,15 @@ const User = require("../models/user");
 
 
 exports.getcreateTrip = async (req, res) => {
-  return res.render("createTrip");
+  return res.render("createTrip", {
+    title: "createTrip",
+  });
 };
 
 exports.postcreateTrip = async (req, res) => {
   try {
-    const { tripTitle, expenses, participants } = req.body;
+    const { tripTitle, date, expenses, participants } = req.body;
+
     const userId = req.user._id;
 
     if (!Array.isArray(expenses) || !Array.isArray(participants)) {
@@ -18,6 +21,7 @@ exports.postcreateTrip = async (req, res) => {
 
     const trip = await Trip.create({
       tripTitle,
+      date,
       expenses: expenses.map((expense) => ({
         title: expense.title,
         amount: expense.amount,
@@ -44,6 +48,7 @@ exports.getUpdateTrip = async (req, res) => {
 
   return res.render("updateTrip", {
     trip: trip,
+    title: "updateTrip",
   });
 };
 exports.postUpdateTrip = async (req, res) => {
@@ -75,3 +80,31 @@ exports.postUpdateTrip = async (req, res) => {
     return res.status(500).send("Error updating trip");
   }
 };
+
+exports.deleteTrip = async (req, res) => {
+  try {
+    const tripId = req.params.id;
+
+    // Find the trip by ID
+    const trip = await Trip.findById(tripId);
+
+    // Check if the trip exists
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    // Check if the user is the creator of the trip
+    if (trip.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).send("You are not authorized to delete this trip");
+    }
+
+    // Delete the trip
+    await Trip.findByIdAndDelete(tripId);
+
+    return res.redirect("/");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error deleting trip");
+  }
+};
+

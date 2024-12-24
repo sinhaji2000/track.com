@@ -17,4 +17,10 @@ Router.post(
   passport.checkAuthentication,
   tripController.postUpdateTrip
 );
+
+Router.post(
+  "/deleteTrip/:id",
+  passport.checkAuthentication,
+  tripController.deleteTrip
+);
 module.exports = Router;

@@ -5,6 +5,10 @@ const TripSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
 
   expenses: [
     {
@@ -15,10 +19,6 @@ const TripSchema = new mongoose.Schema({
       amount: {
         type: Number,
         required: true,
-      },
-      date: {
-        type: Date,
-        default: Date.now,
       },
     },
   ],

@@ -3,7 +3,7 @@ const User = require("../models/user");
 exports.getDashboard = async (req, res) => {
   try {
     if (req.isAuthenticated()) {
-      const user = await User.findById(req.user.id);
+      const user = await User.findById(req.user.id).populate("trips");
 
       return res.render("dashboard", {
         title: "Dashboard",

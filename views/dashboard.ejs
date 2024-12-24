@@ -1,18 +1,14 @@
-
-
-  <!-- Main Content -->
-  <main class="w-full max-w-4xl mx-auto mt-8 px-4 flex-1">
-    <% user.trips.forEach((trip) => { %>
+<main class="w-full max-w-4xl mx-auto mt-8 px-4 flex-1">
+  <!-- Upcoming Trips -->
+  <section class="mb-12">
+    <h1 class="text-3xl font-bold text-green-400 mb-6">Upcoming Trips</h1>
+    <% user.trips.filter(trip => new Date(trip.date) >= new Date()).forEach((trip) => { %>
     <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
       <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
 
       <% 
-                  let totalExpense = 0; 
-                  trip.expenses.forEach((expense) => {
-                      totalExpense += expense.amount;
-                  });
-              %>
-
+        let totalExpense = trip.expenses.reduce((total, expense) => total + expense.amount, 0);
+      %>
       <p class="text-lg font-medium text-green-400 mb-4">Total Expenses: ₹<%= totalExpense %></p>
 
       <ul class="list-disc pl-5">
@@ -22,6 +18,53 @@
         </li>
         <% }); %>
       </ul>
+
+      <!-- Action Buttons -->
+      <div class="mt-4 flex space-x-4">
+        <form action="/trip/updateTrip/<%= trip._id %>" method="GET">
+          <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            Update
+          </button>
+        </form>
+        <form action="/trip/deleteTrip/<%= trip._id %>" method="POST">
+          <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            Delete
+          </button>
+        </form>
+      </div>
     </div>
     <% }) %>
-  </main>
+  </section>
+
+  <!-- Past Trips -->
+  <section>
+    <h1 class="text-3xl font-bold text-red-400 mb-6">Past Trips</h1>
+    <% user.trips.filter(trip => new Date(trip.date) < new Date()).forEach((trip) => { %>
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
+
+      <% 
+        let totalExpense = trip.expenses.reduce((total, expense) => total + expense.amount, 0);
+      %>
+      <p class="text-lg font-medium text-green-400 mb-4">Total Expenses: ₹<%= totalExpense %></p>
+
+      <ul class="list-disc pl-5">
+        <% trip.expenses.forEach((expense) => { %>
+        <li class="text-gray-300 mb-2">
+          <span class="font-semibold text-blue-400"><%= expense.title %>:</span> ₹<%= expense.amount %>
+        </li>
+        <% }); %>
+      </ul>
+
+      <!-- Delete Button -->
+      <div class="mt-4">
+        <form action="/trip/deleteTrip/<%= trip._id %>" method="POST">
+          <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            Delete
+          </button>
+        </form>
+      </div>
+    </div>
+    <% }) %>
+  </section>
+</main>

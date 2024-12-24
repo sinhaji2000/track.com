@@ -11,7 +11,14 @@
     </div>
     <div class="mb-4">
       <label class="block text-sm font-medium text-gray-600">Date of Birth:</label>
-      <p class="text-lg font-semibold text-gray-800"><%= user.DOB %></p>
+      <% 
+        const formattedDOB = new Intl.DateTimeFormat('en-GB', { 
+          year: 'numeric', 
+          month: '2-digit', 
+          day: '2-digit' 
+        }).format(new Date(user.DOB));
+      %>
+      <p class="text-lg font-semibold text-gray-800"><%= formattedDOB %></p>
     </div>
   </div>
 </div>

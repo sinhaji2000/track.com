@@ -5,6 +5,10 @@ const Trip = require("../models/tripModel");
 
 const tripController = require("../controllers/tripController");
 
+Router.get("/", (req, res) => {
+  res.send("Welcome to trip page");
+});
+
 Router.get("/createTrip", tripController.getcreateTrip);
 Router.post(
   "/createTrip",
@@ -23,4 +27,5 @@ Router.post(
   passport.checkAuthentication,
   tripController.deleteTrip
 );
+Router.get("/tripDetails/:id", tripController.getTripInfo);
 module.exports = Router;

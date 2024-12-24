@@ -2,9 +2,14 @@
   <!-- Upcoming Trips -->
   <section class="mb-12">
     <h1 class="text-3xl font-bold text-green-400 mb-6">Upcoming Trips</h1>
-    <% user.trips.filter(trip => new Date(trip.date) >= new Date()).forEach((trip) => { %>
+    <% user.trips.filter(trip => new Date(trip.date) >= new Date()).forEach((trip) => { 
+      let formattedDate = new Intl.DateTimeFormat('en-GB').format(new Date(trip.date)); 
+    %>
     <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-      <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
+      <h2 class="text-2xl font-semibold text-blue-300 mb-4"> <a href="/trip/tripDetails/<%= trip._id%>"><%=trip.tripTitle%></a> </h2>
+      
+      <!-- Trip Date -->
+      <p class="text-lg font-medium text-yellow-400 mb-4">Date: <%= formattedDate %></p>
 
       <% 
         let totalExpense = trip.expenses.reduce((total, expense) => total + expense.amount, 0);
@@ -39,9 +44,14 @@
   <!-- Past Trips -->
   <section>
     <h1 class="text-3xl font-bold text-red-400 mb-6">Past Trips</h1>
-    <% user.trips.filter(trip => new Date(trip.date) < new Date()).forEach((trip) => { %>
+    <% user.trips.filter(trip => new Date(trip.date) < new Date()).forEach((trip) => { 
+      let formattedDate = new Intl.DateTimeFormat('en-GB').format(new Date(trip.date)); 
+    %>
     <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
       <h2 class="text-2xl font-semibold text-blue-300 mb-4"><%= trip.tripTitle %></h2>
+
+      <!-- Trip Date -->
+      <p class="text-lg font-medium text-yellow-400 mb-4">Date: <%= formattedDate %></p>
 
       <% 
         let totalExpense = trip.expenses.reduce((total, expense) => total + expense.amount, 0);

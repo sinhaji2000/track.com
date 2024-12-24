@@ -108,3 +108,25 @@ exports.deleteTrip = async (req, res) => {
   }
 };
 
+exports.getTripInfo = async (req, res) => {
+  try {
+    const tripId = req.params.id;
+    const trip = await Trip.findById(tripId).populate("createdBy");
+
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    if (trip.createdBy._id.toString() !== req.user._id.toString()) {
+      return res.status(404).send("PAGE NOT FOUND");
+    }
+    return res.render("tripDetails", {
+      trip: trip,
+      title: `tripDetails | ${trip.tripTitle}`,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Error getting trip info");
+  }
+};
+

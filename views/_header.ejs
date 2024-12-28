@@ -1,18 +1,30 @@
 <nav class="bg-blue-600 shadow-lg">
-    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-      <div class="text-white text-2xl font-bold">
-        <a href="/">TRIP.COM</a>
-      </div>
-      <div class="space-x-6 text-white text-lg font-medium">
-        <a href="/" class="hover:text-gray-300">Dashboard</a>
-        <a href="/trip/createTrip" class="hover:text-gray-300">Trips</a>
-        <a href="/inbox" class="hover:text-gray-300">Inbox</a>
-       
-        <% if(locals.user) { %> 
-            <a href="/user/profile/<%= locals.user.id %>" class="hover:text-gray-300">Profile</a>
-            <%} else { %> 
-                <a href="/user/signIn" class="hover:text-gray-300">Signin</a>
-                <%}%>
-      </div>
+  <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+    <div class="text-white text-2xl font-bold">
+      <a href="/">TRIP.COM</a>
     </div>
-  </nav>
+    <div class="space-x-6 text-white text-lg font-medium flex items-center">
+      <a href="/" class="hover:text-gray-300">Dashboard</a>
+      <a href="/trip/createTrip" class="hover:text-gray-300">Trips</a>
+      <a href="/inbox" class="hover:text-gray-300">Inbox</a>
+
+      <% if (locals.user) { %>
+        <!-- Profile Dropdown -->
+        <div class="relative group">
+          <span class="cursor-pointer hover:text-gray-300">
+            <%= locals.user.name %>
+          </span>
+          <!-- Dropdown Menu -->
+          <div class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            <a href="/user/profile/<%= locals.user.id %>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</a>
+            <form action="/user/signOut" method="POST">
+              <button type="submit" class="block px-4 py-2 w-full text-left text-gray-800 hover:bg-gray-200">Signout</button>
+            </form>
+          </div>
+        </div>
+      <% } else { %>
+        <a href="/user/signIn" class="hover:text-gray-300">Signin</a>
+      <% } %>
+    </div>
+  </div>
+</nav>

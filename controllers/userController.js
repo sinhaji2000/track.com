@@ -115,3 +115,21 @@ exports.updateUserProfile = async (req, res) => {
     return res.status(500).redirect("/");
   }
 };
+
+exports.postSignOut = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.redirect("/"); // Redirect to home page even on error
+    }
+
+    // Destroy the session explicitly
+    req.session.destroy((sessionErr) => {
+      if (sessionErr) {
+        console.error("Error destroying session:", sessionErr);
+      }
+      res.clearCookie("Track.com"); // Clear the session cookie
+      res.redirect("/"); // Redirect to home page after logout
+    });
+  });
+};

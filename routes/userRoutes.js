@@ -31,6 +31,7 @@ Router.post(
   passport.checkAuthentication,
   userController.updateUserProfile
 );
+Router.post("/signOut", userController.postSignOut);
 
 
 module.exports = Router;
